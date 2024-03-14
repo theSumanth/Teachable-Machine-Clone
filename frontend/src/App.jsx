@@ -11,17 +11,17 @@ const router = createBrowserRouter([
   { path: "/", element: <HomePage /> },
   {
     path: "/create-model",
-    element: <RootLayout />,
+    element: (
+      <ClassContextProvider>
+        <ModelContextProvder>
+          <RootLayout />
+        </ModelContextProvder>
+      </ClassContextProvider>
+    ),
     children: [
       {
         index: true,
-        element: (
-          <ClassContextProvider>
-            <ModelContextProvder>
-              <CreateModel />
-            </ModelContextProvder>
-          </ClassContextProvider>
-        ),
+        element: <CreateModel />,
       },
     ],
   },

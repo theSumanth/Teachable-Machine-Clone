@@ -27,7 +27,7 @@ const Navbar = () => {
   let cssClass = "transition-all";
 
   if (isHide) {
-    cssClass += " -translate-x-96";
+    cssClass += " -translate-x-96 opacity-0";
   }
 
   return (

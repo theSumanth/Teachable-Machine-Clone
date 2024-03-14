@@ -8,7 +8,7 @@ import { ClassContext } from "../store/ClassContextProvider";
 import { ModelContext } from "../store/ModelContextProvder";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-const initialModalData = {};
+let initialModalData;
 
 const TrainModel = () => {
   const [isAdvanceClicked, setIsAdvanceClicked] = useState(false);

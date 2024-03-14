@@ -7,10 +7,12 @@ export const ModelContext = createContext({
     lossPlotData: "",
     confusionMatrixData: "",
     isTrained: false,
+    showMetrics: false,
     imageToPred: {},
   },
   setModelData: () => {},
   setPredImage: () => {},
+  setShowMetrics: () => {},
 });
 
 const ModelContextProvder = ({ children }) => {
@@ -20,6 +22,7 @@ const ModelContextProvder = ({ children }) => {
     lossPlotData: "",
     confusionMatrixData: "",
     isTrained: false,
+    showMetrics: false,
   });
 
   const handleSetFetchedData = useCallback(function handleSetFetchedData(data) {
@@ -40,10 +43,19 @@ const ModelContextProvder = ({ children }) => {
     }));
   }
 
+  function handleShowMetrics() {
+    console.log("show metrics");
+    setFetchedData((prevState) => ({
+      ...prevState,
+      showMetrics: !prevState.showMetrics,
+    }));
+  }
+
   const modelCtx = {
     modelData: fetchedData,
     setModelData: handleSetFetchedData,
     setPredImage: handleSetImage,
+    setShowMetrics: handleShowMetrics,
   };
 
   return (

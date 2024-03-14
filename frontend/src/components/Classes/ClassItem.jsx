@@ -5,6 +5,7 @@ import ImagesDisplay from "../UI/ImagesDisplay";
 import { Trash, Pencil, Upload, CheckCircle } from "lucide-react";
 
 const ClassItem = ({ classItem, isMainClass }) => {
+  const multipleInputRef = useRef();
   const inputRef = useRef();
   const [isEditing, setIsEditing] = useState(false);
 
@@ -14,12 +15,13 @@ const ClassItem = ({ classItem, isMainClass }) => {
     setIsEditing((prev) => !prev);
   }
 
-  function handleClassnameChange(value, id) {
-    classCtx.renameClass(id, value);
+  function handleSave() {
+    classCtx.renameClass(classItem.id, inputRef.current.value);
+    setIsEditing((prev) => !prev);
   }
 
   function handleUploadClick() {
-    inputRef.current.click();
+    multipleInputRef.current.click();
   }
 
   function handleOnImagesChange(event, id) {
@@ -55,7 +57,7 @@ const ClassItem = ({ classItem, isMainClass }) => {
         <ImagesDisplay images={classItem.images} classId={classItem.id} />
       </div>
       <input
-        ref={inputRef}
+        ref={multipleInputRef}
         type="file"
         onChange={(event) => handleOnImagesChange(event, classItem.id)}
         multiple
@@ -71,23 +73,18 @@ const ClassItem = ({ classItem, isMainClass }) => {
           {isEditing && (
             <>
               <input
+                ref={inputRef}
                 type="text"
                 id="classname"
-                name="classname"
-                onChange={(event) =>
-                  handleClassnameChange(event.target.value, classItem.id)
-                }
                 className="text-gray-800 font-medium bg-blue-100 focus:outline-none rounded-sm"
                 defaultValue={classItem.name}
               />
               <CheckCircle
-                onClick={handleEdit}
+                onClick={handleSave}
                 size={16}
                 color="green"
                 className="cursor-pointer"
-              >
-                Save
-              </CheckCircle>
+              />
             </>
           )}
 

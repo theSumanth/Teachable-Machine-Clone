@@ -10,13 +10,15 @@ const initialPredictData = "";
 const PreviewModel = () => {
   const inputRef = useRef();
 
-  const { fetchedData: predictedData, fetchModel: fetchPrediction } = useHttp(
-    "http://localhost:5000/predict",
-    initialPredictData
-  );
+  const {
+    fetchedData: predictedData,
+    isLoading: isPredicting,
+    fetchModel: fetchPrediction,
+  } = useHttp("http://localhost:5000/predict", initialPredictData);
 
   const modelCtx = useContext(ModelContext);
-  const { isTrained, id, imageToPred } = modelCtx.modelData;
+  const { modelData, setShowMetrics } = modelCtx;
+  const { isTrained, id, imageToPred } = modelData;
 
   function handleClick() {
     inputRef.current.click();
@@ -36,7 +38,7 @@ const PreviewModel = () => {
 
   let modelActions = (
     <div className="flex flex-col">
-      <Button>
+      <Button onClick={setShowMetrics}>
         <BarChart3 className="inline-block" /> Under the hood
       </Button>
       <div
@@ -66,7 +68,9 @@ const PreviewModel = () => {
 
       <span className="m-4 font-medium text-sm">
         Output:{" "}
-        <span className="text-green-800">{predictedData.prediction}</span>
+        <span className="text-green-800">
+          {isPredicting ? "Predicting..." : predictedData.prediction}
+        </span>
       </span>
     </div>
   );
