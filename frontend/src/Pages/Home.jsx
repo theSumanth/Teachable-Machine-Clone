@@ -28,6 +28,14 @@ const steps = [
 const HomePage = () => {
   return (
     <div className="flex items-center justify-center bg-white flex-col">
+      <header className="top-0 fixed flex justify-between items-center p-4 w-full shadow-lg bg-white">
+        <h1 className="text-xl font-bold text-blue-600">Teachable Machine</h1>
+        <Link to={"/create-model"} className="">
+          <button className="px-6 py-1 bg-blue-600 text-white font-bold hover:bg-blue-500 rounded-md">
+            Get Started
+          </button>
+        </Link>
+      </header>
       <div className="flex h-screen flex-col justify-center items-start">
         <h1 className="text-5xl font-bold text-blue-600 mb-6">
           Teachable Machine

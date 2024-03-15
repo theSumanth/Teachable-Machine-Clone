@@ -7,9 +7,8 @@ import CustomImage from "../UI/CustomImage";
 import ExportModel from "./ExportModel";
 import Modal from "../UI/Modal";
 import { ModelContext } from "../store/ModelContextProvder";
-import { ClassContext } from "../store/ClassContextProvider";
 
-const initialPredictData = 0;
+const initialPredictData = "";
 
 const PreviewModel = () => {
   const inputRef = useRef();
@@ -21,10 +20,8 @@ const PreviewModel = () => {
   } = useHttp("http://localhost:5000/predict", initialPredictData);
 
   const modelCtx = useContext(ModelContext);
-  const classCtx = useContext(ClassContext);
 
   const { modelData, setShowMetrics } = modelCtx;
-  const { classes } = classCtx;
   const { isTrained, id, imageToPred } = modelData;
 
   function handleClick() {
@@ -82,9 +79,7 @@ const PreviewModel = () => {
       <span className="m-4 font-medium text-sm">
         Output:{" "}
         <span className="text-green-800">
-          {isPredicting
-            ? "Predicting..."
-            : classes[predictedData.prediction]?.name}
+          {isPredicting ? "Predicting..." : predictedData.prediction}
         </span>
       </span>
     </div>
