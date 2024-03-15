@@ -1,11 +1,10 @@
 import tensorflow as tf
-import keras
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress TensorFlow messages
 os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
 from flask import Flask, request, send_file, jsonify, send_from_directory
-from keras.preprocessing.image import ImageDataGenerator, img_to_array, load_img
+from tensorflow.keras.preprocessing.image import ImageDataGenerator, img_to_array, load_img
 import os
 import io
 import uuid

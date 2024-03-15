@@ -1,11 +1,15 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 
 import { BarChart3, Download, FolderDown } from "lucide-react";
-import Button from "./UI/Button";
-import { ModelContext } from "../store/ModelContextProvder";
+import Button from "../UI/Button";
 import useHttp from "../hooks/useHttp";
+import CustomImage from "../UI/CustomImage";
+import ExportModel from "./ExportModel";
+import Modal from "../UI/Modal";
+import { ModelContext } from "../store/ModelContextProvder";
+import { ClassContext } from "../store/ClassContextProvider";
 
-const initialPredictData = "";
+const initialPredictData = 0;
 
 const PreviewModel = () => {
   const inputRef = useRef();
@@ -17,7 +21,10 @@ const PreviewModel = () => {
   } = useHttp("http://localhost:5000/predict", initialPredictData);
 
   const modelCtx = useContext(ModelContext);
+  const classCtx = useContext(ClassContext);
+
   const { modelData, setShowMetrics } = modelCtx;
+  const { classes } = classCtx;
   const { isTrained, id, imageToPred } = modelData;
 
   function handleClick() {
@@ -34,6 +41,11 @@ const PreviewModel = () => {
     formData.append("image", file);
 
     fetchPrediction(formData);
+  }
+
+  const [showModal, setShowModal] = useState(false);
+  function handleModalClick() {
+    setShowModal((prev) => !prev);
   }
 
   let modelActions = (
@@ -57,9 +69,10 @@ const PreviewModel = () => {
       />
 
       {imageToPred ? (
-        <div className="bg-blue-100 text-blue-600 aspect-square m-4 flex object-cover justify-center items-center rounded">
-          <img src={imageToPred.url} alt="image used for prediction" />
-        </div>
+        <CustomImage
+          source={imageToPred.url}
+          altText={"image used for prediction"}
+        />
       ) : (
         <div className="bg-blue-100 text-blue-600 aspect-square m-4 flex object-cover justify-center items-center rounded">
           <span className="text-xs">No Image selected</span>
@@ -69,7 +82,9 @@ const PreviewModel = () => {
       <span className="m-4 font-medium text-sm">
         Output:{" "}
         <span className="text-green-800">
-          {isPredicting ? "Predicting..." : predictedData.prediction}
+          {isPredicting
+            ? "Predicting..."
+            : classes[predictedData.prediction]?.name}
         </span>
       </span>
     </div>
@@ -82,18 +97,27 @@ const PreviewModel = () => {
   }
 
   return (
-    <section className="h-screen flex items-center sticky top-0">
-      <div className="flex flex-col gap-2 bg-white w-[330px] my rounded-md shadow-md">
-        <div className="flex justify-evenly my-4">
-          <h1 className="font-medium py-2 mx-4">Preview Model</h1>
-          <Button isExport disabled={isTrained}>
-            <Download className="inline-block" size={18} /> Export Model
-          </Button>
+    <>
+      <Modal
+        open={showModal}
+        onEscapeModal={showModal ? handleModalClick : null}
+      >
+        <ExportModel onEscapeModal={showModal ? handleModalClick : null} />
+      </Modal>
+
+      <section className="h-screen flex items-center sticky top-0">
+        <div className="flex flex-col gap-2 bg-white w-[330px] my rounded-md shadow-md">
+          <div className="flex justify-evenly my-4">
+            <h1 className="font-medium py-2 mx-4">Preview Model</h1>
+            <Button isExport disabled={!isTrained} onClick={handleModalClick}>
+              <Download className="inline-block" size={18} /> Export Model
+            </Button>
+          </div>
+          <hr />
+          {modelActions}
         </div>
-        <hr />
-        {modelActions}
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

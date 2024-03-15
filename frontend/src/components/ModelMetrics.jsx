@@ -2,15 +2,14 @@ import { useContext } from "react";
 import { ModelContext } from "../store/ModelContextProvder";
 
 import { BarChart3, X } from "lucide-react";
+import CustomImage from "../UI/CustomImage";
 
 function Metric({ title, altText, data }) {
   return (
     <>
       <section className="p-6 text-sm text-blue-600">
         <span>{title}</span>
-        <div className="text-blue-600 aspect-square my-2 flex object-cover justify-center items-center rounded">
-          {data && <img src={`data:image/png;base64,${data}`} alt={altText} />}
-        </div>
+        <CustomImage source={data} altText={altText} />
       </section>
       <hr className="h-[0.1rem]" />
     </>
@@ -57,17 +56,17 @@ const ModelMetrics = () => {
         <Metric
           title={"Confusion Matrix"}
           altText={"Confusion Matrix"}
-          data={modelData.confusionMatrixData}
+          data={`data:image/png;base64,${modelData.confusionMatrixData}`}
         />
         <Metric
           title={"Accuracy per epoch"}
           altText={"Accuracy Plot"}
-          data={modelData.accuracyPlotData}
+          data={`data:image/png;base64,${modelData.accuracyPlotData}`}
         />
         <Metric
           title={"Loss per epoch"}
           altText={"Loss Plot"}
-          data={modelData.lossPlotData}
+          data={`data:image/png;base64,${modelData.lossPlotData}`}
         />
       </aside>
     </div>

@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 
-import Button from "./UI/Button";
-import Input from "./UI/Input";
-import Loader from "../widgets/Loader";
+import Button from "../UI/Button";
+import Input from "../UI/Input";
+import Loader from "../UI/Loader";
 import useHttp from "../hooks/useHttp";
 import { ClassContext } from "../store/ClassContextProvider";
 import { ModelContext } from "../store/ModelContextProvder";

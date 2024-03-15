@@ -1,7 +1,7 @@
 import { useRef, useContext, useState } from "react";
 
 import { ClassContext } from "../../store/ClassContextProvider";
-import ImagesDisplay from "../UI/ImagesDisplay";
+import ImagesDisplay from "../../UI/ImagesDisplay";
 import { Trash, Pencil, Upload, CheckCircle } from "lucide-react";
 
 const ClassItem = ({ classItem, isMainClass }) => {

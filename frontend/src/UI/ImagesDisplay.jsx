@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { ClassContext } from "../../store/ClassContextProvider";
+import { ClassContext } from "../store/ClassContextProvider";
 
 const ImagesDisplay = ({ images, classId }) => {
   const classCtx = useContext(ClassContext);
