@@ -21,7 +21,11 @@ const ImagesDisplay = ({ images, classId }) => {
           className="w-14 h-14 object-cover p-1 cursor-pointer hover:bg-blue-200"
           onClick={() => handleDelete(image.id)}
         >
-          <img src={image.url} alt="uploaded image" />
+          <img
+            src={image.url}
+            alt="uploaded image"
+            className="w-14 h-14 object-contain"
+          />
         </li>
       ))}
     </ul>
